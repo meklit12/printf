@@ -1,31 +1,42 @@
-#include <stdio.h>
 #include <stdarg.h>
-#include <string.h>
+#include <stdio.h>
 #include "main.h"
 /**
- * _printf - a function that prints
- * @format: pointer
- *
- * Return: integer value
- */
-int _printf(const char *format, ...)
+* print_bin - convert to binary
+* @b: number in decinal
+* Return: number of chars printed
+*/
+int print_bin(va_list b)
 {
-va_list args;
-int we,a[10], i, n;
-if(*format == 'b')
-{
-for (i = 0; n > 0; i++)
-{
-a[i] = n % 2;
-n = n/2;
-}
-for (i = i - 1; i >= 0; i++)
-{
-return (a[i]);
-}
-}
-va_start(args, format);
-we = vfprintf(stdout, format, args);
-va_end(args);
-return (we);
+	unsigned int len, powten, j, digit, n, num;
+	int count = 0;
+
+	n = va_arg(b, unsigned int);
+	if (n != 0)
+	{
+		num = n;
+		len = 0;
+		while (num != 0)
+		{
+			num /= 2;
+			len++;
+		}
+		powten = 1;
+		for (j = 1; j <= len - 1; j++)
+			powten *= 2;
+		for (j = 1; j <= len; j++)
+		{
+			digit = n / powten;
+			_putchar(digit + '0');
+			count++;
+			n -= digit * powten;
+			powten /= 2;
+		}
+	}
+	else
+	{
+		_putchar('0');
+		return (1);
+	}
+	return (count);
 }
